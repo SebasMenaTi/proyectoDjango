@@ -1,0 +1,41 @@
+{% extends "academic/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        ¿Estás seguro de eliminar este registro académico?
+                    </p>
+                    <div class="alert alert-warning">
+                        <strong>Estudiante:</strong> {{ student_name }}<br>
+                        <strong>Fecha:</strong> {{ record_date|date:"d/m/Y" }}
+                    </div>
+                    <p class="text-danger">
+                        <i class="fas fa-info-circle"></i> Esta acción no se puede deshacer.
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Sí, eliminar registro
+                            </button>
+                            <a href="{% url 'academic:all_records' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

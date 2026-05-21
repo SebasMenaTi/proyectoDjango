@@ -1,0 +1,56 @@
+{% extends "academic/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1><i class="fas fa-chart-line"></i> Historial de Predicciones</h1>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Estudiante</th>
+                            <th>Estado</th>
+                            <th>Probabilidad</th>
+                            <th>Alerta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pred in predictions %}
+                        <tr>
+                            <td>{{ pred.date|date:"d/m/Y" }}</td>
+                            <td>{{ pred.student.name }}</td>
+                            <td>
+                                {% if pred.hidden_state == 'motivado' %}
+                                    <span class="badge bg-success">{{ pred.get_hidden_state_display }}</span>
+                                {% elif pred.hidden_state == 'estresado' %}
+                                    <span class="badge bg-danger">{{ pred.get_hidden_state_display }}</span>
+                                {% elif pred.hidden_state == 'cansado' %}
+                                    <span class="badge bg-warning">{{ pred.get_hidden_state_display }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ pred.get_hidden_state_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ pred.probability|floatformat:2 }}%</td>
+                            <td>
+                                {% if pred.is_stressed %}
+                                    <i class="fas fa-bell text-danger"></i> Activa
+                                {% else %}
+                                    <i class="fas fa-check text-success"></i> Normal
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No hay predicciones realizadas</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "academic/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-clipboard"></i> Detalle del Registro
+                    </h3>
+                    <div>
+                        <a href="{% url 'academic:all_records' %}" class="btn btn-light">
+                            <i class="fas fa-arrow-left"></i> Volver
+                        </a>
+                        <a href="{% url 'academic:record_delete' record.id %}" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Información del Estudiante</h4>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th>Nombre:</th>
+                                    <td>{{ record.student.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>{{ record.student.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fecha de registro:</th>
+                                    <td>{{ record.date|date:"d/m/Y" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Métricas Académicas</h4>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th>Horas de estudio:</th>
+                                    <td>{{ record.study_hours }} horas</td>
+                                </tr>
+                                <tr>
+                                    <th>Tareas entregadas:</th>
+                                    <td>{{ record.tasks_delivered }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Asistencia:</th>
+                                    <td>{{ record.attendance }}%</td>
+                                </tr>
+                                <tr>
+                                    <th>Horas de sueño:</th>
+                                    <td>{{ record.sleep_hours }} horas</td>
+                                </tr>
+                                <tr>
+                                    <th>Retrasos en entregas:</th>
+                                    <td>{{ record.delivery_delays }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Actividad académica:</th>
+                                    <td>{{ record.academic_activity_time }} horas</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    {% if prediction %}
+                    <div class="alert alert-info mt-3">
+                        <h5><i class="fas fa-robot"></i> Predicción del HMM</h5>
+                        <p>Estado detectado: 
+                            <strong>
+                                {% if prediction.hidden_state == 'motivado' %}
+                                    <span class="text-success">Motivado</span>
+                                {% elif prediction.hidden_state == 'estresado' %}
+                                    <span class="text-danger">Estresado</span>
+                                {% elif prediction.hidden_state == 'cansado' %}
+                                    <span class="text-warning">Cansado</span>
+                                {% else %}
+                                    <span class="text-secondary">Desmotivado</span>
+                                {% endif %}
+                            </strong>
+                        </p>
+                        <p>Probabilidad: {{ prediction.probability|floatformat:1 }}%</p>
+                        {% if prediction.is_stressed %}
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle"></i> 
+                                <strong>¡Alerta de estrés académico!</strong> Se recomienda intervención.
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
