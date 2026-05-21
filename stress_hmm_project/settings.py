@@ -1,4 +1,4 @@
-# stress_hmm_project/settings.py
+
 
 import os
 from pathlib import Path
@@ -20,13 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',  # ✅ Esta app debe estar presente
-    'academic',  # Tu app
+    'django.contrib.staticfiles',  
+    'academic', 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ Para archivos estáticos
+    'whitenoise.middleware.WhiteNoiseMiddleware',  #  Para archivos estáticos
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -86,7 +86,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'  # ✅ ¡Esta línea es OBLIGATORIA!
+STATIC_URL = '/static/'  #  ¡Esta línea es OBLIGATORIA!
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

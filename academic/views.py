@@ -53,7 +53,7 @@ def student_create(request):
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, '✅ Estudiante creado exitosamente.')
+            messages.success(request, ' Estudiante creado exitosamente.')
             return redirect('academic:student_list')
     else:
         form = StudentForm()
@@ -67,7 +67,7 @@ def student_update(request, pk):
         form = StudentForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
-            messages.success(request, '✅ Estudiante actualizado correctamente.')
+            messages.success(request, ' Estudiante actualizado correctamente.')
             return redirect('academic:student_list')
     else:
         form = StudentForm(instance=student)
@@ -80,7 +80,7 @@ def student_delete(request, pk):
     if request.method == 'POST':
         student_name = student.name
         student.delete()
-        messages.success(request, f'✅ Estudiante "{student_name}" eliminado.')
+        messages.success(request, f' Estudiante "{student_name}" eliminado.')
         return redirect('academic:student_list')
     return render(request, 'academic/student_confirm_delete.html', {'student': student})
 
@@ -95,7 +95,7 @@ def record_create(request):
             # Ejecutar predicción HMM
             predict_student_state(record.student, record.date)
             
-            messages.success(request, '✅ Registro creado y análisis HMM completado.')
+            messages.success(request, ' Registro creado y análisis HMM completado.')
             return redirect('academic:student_list')
     else:
         form = AcademicRecordForm()
@@ -187,7 +187,7 @@ def run_batch_analysis(request):
         details=f"Análisis completado el {datetime.now()}"
     )
     
-    messages.success(request, f'✅ Análisis completado. Se generaron {total_alerts} alertas de estrés.')
+    messages.success(request, f' Análisis completado. Se generaron {total_alerts} alertas de estrés.')
     return redirect('academic:dashboard')
 
 @login_required
@@ -281,7 +281,7 @@ def record_delete(request, pk):
     
     if request.method == 'POST':
         record.delete()
-        messages.success(request, f'✅ Registro del {record_date} para {student_name} eliminado.')
+        messages.success(request, f' Registro del {record_date} para {student_name} eliminado.')
         return redirect('academic:all_records')
     
     return render(request, 'academic/record_confirm_delete.html', {

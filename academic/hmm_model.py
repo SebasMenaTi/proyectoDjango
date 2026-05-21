@@ -7,7 +7,7 @@ import joblib
 class AcademicStressHMM:
     """
     Modelo Oculto de Markov personalizado para detección de estrés académico.
-    Usa implementación propia sin hmmlearn.
+    
     """
     
     def __init__(self, n_states=4, n_observations=6):
